@@ -1,6 +1,6 @@
 { "name": "cortex"
 , "version": "0.0.1"
-, "description": "Object capability model based object cortexs for secure interaction with unprivileged code."
+, "description": "Limited / controlled object proprety access."
 , "homepage": "http://github.com/Gozala/cortex/"
 , "keywords": ["capability", "wrapper", "cortex", "facade", "proxy"]
 , "contributors":
