@@ -85,32 +85,21 @@ exports["test immunity of inheritance"] = function(assert) {
 }
 
 exports["test customized public properties"] = function(assert) {
-  var source = Object.create({ _a: 'a', b: 'b', c: 'c' }, {
-    _d: { value: 'd' },
-    e: { value: 'e' },
-    get: { value: function get(name) {
+  var source = {
+    _a: 'a',
+    b: 'b',
+    get: function get(name) {
       return this[name];
-    }}
-  });
+    }
+  };
   
-  var fixture = cortex(source, ['_a', 'get', 'c', '_d']);
+  var fixture = cortex(source, ['_a', 'get']);
   fixture._a += "#change";
-  fixture.c += "#change";
-  fixture._d += "#change";
-  fixture.b += "#change";
 
 
-  assert.equal(Object.getPrototypeOf(fixture), Object.getPrototypeOf(source),
-               "cortex inherits from the object's prototype");
-  assert.ok(!("e" in fixture), "non-public own property is not defined");
-  assert.notEqual(fixture.b, source.b,
-              "inherited non-public property change does not propagates");
+  assert.ok(!("b" in fixture), "non-public own property is not defined");
   assert.equal(fixture.get("b"), source.b,
               "public methods preserve access to the private properties");
   assert.equal(fixture._a, source._a,
-              "inherited custom public property changes propagate");
-  assert.equal(fixture.c, source.c,
-              "inherited public property changes propagate");
-  assert.equal(fixture._d, source._d,
-              "custom public property changes propagete");
+              "custom public property changes propagate");
 }
